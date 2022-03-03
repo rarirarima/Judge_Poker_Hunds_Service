@@ -1,0 +1,15 @@
+current directory: /Users/r.arima/RubymineProjects/Judge_Poker_Hunds/vendor/bundle/ruby/2.4.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+/Users/r.arima/.rbenv/versions/2.4.7/bin/ruby -r ./siteconf20220303-18082-1cq37ht.rb extconf.rb
+creating Makefile
+
+current directory: /Users/r.arima/RubymineProjects/Judge_Poker_Hunds/vendor/bundle/ruby/2.4.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /Users/r.arima/RubymineProjects/Judge_Poker_Hunds/vendor/bundle/ruby/2.4.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.bundle
+
+current directory: /Users/r.arima/RubymineProjects/Judge_Poker_Hunds/vendor/bundle/ruby/2.4.0/gems/debug_inspector-1.1.0/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.bundle ./.gem.20220303-18082-1l5eqyo

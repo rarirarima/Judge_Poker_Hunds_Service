@@ -1,0 +1,15 @@
+<div class="main top-main">
+  <h1>Poker 役判定</h1>
+  <div class="enter-form">
+    <%= form_tag("/home/judge") do %>
+      <p>カードを入力してください。（例: C5 D6 H6 S6 C13）</p>
+      <div class="input">
+        <input name="cards" value="<%= flash[:cards] %>">
+        <input type="submit" value="判定">
+      </div>
+    <% end %>
+  </div>
+  <div class="result">
+    <%= simple_format(flash[:message]) %>
+  </div>
+</div>
