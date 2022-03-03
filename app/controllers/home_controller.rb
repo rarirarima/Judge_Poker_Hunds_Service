@@ -8,7 +8,7 @@ class HomeController < ApplicationController
       cards = params[:cards]
       flash[:cards] = cards
       summarize_class = BaseService::Summarize.new
-      message = summarize_class.error_or_judge(cards)
+      message = summarize_class.api_or_webapp(cards)
       flash[:message] = message
       redirect_to "http://localhost:3000"#, status: :ok
     end

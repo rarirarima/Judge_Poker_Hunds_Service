@@ -5,8 +5,8 @@ module ErrorService
           message = "カードが入力されていません。"
       else
           cards_array = cards.split(' ')
-          if cards.split(' ').size != 5
-              message = "5つのカード指定文字を半角スペース区切りで入力してください。（例:S1 D1 H1 C13 H13）"
+          if cards_array.size != 5
+              message = "5つのカード指定文字を半角スペース区切りで入力してください。"
           elsif incorrect_card_error(cards_array)
               message = incorrect_card_error(cards_array)
           elsif repeat_error?(cards_array)
