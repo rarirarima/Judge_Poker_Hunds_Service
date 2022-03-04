@@ -15,12 +15,12 @@ module BaseService
 
     def api(cards_list)
       result = []
-      error = []
+      @error = []
       strength_ar = []
       cards_list.each do |cards|
         if ErrorService.process_errors(cards, API)
           api_error = ErrorService.process_errors(cards, API)
-          error = api_error(cards, api_error)
+          api_error(cards, api_error, @error)
         else
           result_elements = {
             "card": cards,
@@ -34,14 +34,13 @@ module BaseService
       result = StrengthService.decide_best(strength_ar, result)
       response = {
         "result": result,
-        "error": error
+        "error": @error
       }
       response.delete_if{|key, value| value.blank? == true}
       return response
     end
 
-    def api_error(cards, api_error)
-      error = []
+    def api_error(cards, api_error, error)
       if api_error.kind_of?(Array)
         api_error.each do |error_message|
           error_elements = {
