@@ -6,7 +6,7 @@ module BaseService
     include ErrorService
 
     def api_or_webapp(cards_list)
-      if cards_list.kind_of?(Array)
+      if cards_list.is_a?(Array)
         api(cards_list)
       else
         webapp(cards_list)
@@ -36,12 +36,12 @@ module BaseService
         "result": result,
         "error": @error
       }
-      response.delete_if{|key, value| value.blank? == true}
-      return response
+      response.delete_if { |_key, value| value.blank? == true }
+      response
     end
 
     def api_error(cards, api_error, error)
-      if api_error.kind_of?(Array)
+      if api_error.is_a?(Array)
         api_error.each do |error_message|
           error_elements = {
             "card": cards,
@@ -60,12 +60,7 @@ module BaseService
     end
 
     def webapp(cards_list)
-      if ErrorService.process_errors(cards_list, WEB_APP)
-        ErrorService.process_errors(cards_list, WEB_APP)
-      else
-        JudgeService.search_hands(cards_list)
-      end
+      ErrorService.process_errors(cards_list, WEB_APP) || JudgeService.search_hands(cards_list)
     end
-
   end
 end

@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -24,6 +24,5 @@ module JudgePokerHunds
     config.paths.add File.join('app', 'apis'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'apis', '*')]
     config.middleware.insert_before ActionDispatch::ParamsParser, 'RescueJsonParseErrors'
-
   end
 end

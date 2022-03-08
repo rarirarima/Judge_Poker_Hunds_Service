@@ -19,5 +19,4 @@ RSpec.describe HomeController do
       expect(response).to redirect_to 'http://localhost:3000'
     end
   end
-
 end
