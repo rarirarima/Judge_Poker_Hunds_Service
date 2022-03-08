@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get '/' => 'home#top'
-  post 'home/judge' => 'home#judge'
+  post 'home/show' => 'home#show'
   mount API::Root => '/'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -8,14 +8,14 @@ RSpec.describe HomeController do
     end
   end
 
-  describe 'POST #judge' do
+  describe 'POST #show' do
     it 'return 302' do
-      post :judge
+      post :show
       expect(response).to have_http_status(302)
     end
 
     it 'redirect to top page' do
-      post :judge
+      post :show
       expect(response).to redirect_to 'http://localhost:3000'
     end
   end

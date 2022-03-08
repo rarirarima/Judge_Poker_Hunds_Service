@@ -3,12 +3,12 @@ class HomeController < ApplicationController
 
   def top; end
 
-  def judge
+  def show
     cards = params[:cards]
     flash[:cards] = cards
     summarize_class = BaseService::Summarize.new
     message = summarize_class.api_or_webapp(cards)
     flash[:message] = message
-    redirect_to 'http://localhost:3000' # , status: :ok
+    redirect_to 'http://localhost:3000'
   end
 end
