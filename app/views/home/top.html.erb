@@ -1,15 +1,15 @@
-<div class="main top-main">
+<div class='main top-main'>
   <h1>Poker 役判定</h1>
-  <div class="enter-form">
-    <%= form_tag("/home/show") do %>
+  <div class='enter-form'>
+    <%= form_tag('/home/show') do %>
       <p>カードを入力してください。（例: C5 D6 H6 S6 C13）</p>
       <div class="input">
-        <input name="cards" value="<%= flash[:cards] %>">
-        <input type="submit" value="判定">
+        <%= text_field_tag 'cards', flash[:cards], placeholder: 'C1 D2 H1 S10 C13' %>
+        <input type='submit' value='判定'>
       </div>
     <% end %>
   </div>
-  <div class="result">
+  <div class='result'>
     <%= simple_format(flash[:message]) %>
   </div>
 </div>
