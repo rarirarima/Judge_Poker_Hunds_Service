@@ -23,11 +23,14 @@ RSpec.describe API::Ver1::Poker, type: :request do
         post '/api/ver1/poker', params
       end
       let(:error_msg){JSON.parse(response.body)['error'][0]['msg']}
-      context 'nothing is entered' do
-        let(:params) { { "cards": [''] } }
+      shared_examples 'return http status code 400' do
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
+      end
+      context 'nothing is entered' do
+        let(:params) { { "cards": [''] } }
+        it_behaves_like 'return http status code 400'
         it 'return error message' do
           expect(error_msg).to eq 'カードが入力されていません。'
         end
@@ -35,9 +38,7 @@ RSpec.describe API::Ver1::Poker, type: :request do
 
       context 'less than 5 cards' do
         let(:params) { { "cards": ['H1 H2 H3 H4'] } }
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
+        it_behaves_like 'return http status code 400'
         it 'return error message' do
           expect(error_msg).to eq '5つのカード指定文字を半角スペース区切りで入力してください。'
         end
@@ -45,9 +46,7 @@ RSpec.describe API::Ver1::Poker, type: :request do
 
       context 'integer value in array' do
         let(:params) { { "cards": [123] } }
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
+        it_behaves_like 'return http status code 400'
         it 'return error message' do
           expect(error_msg).to eq '5つのカード指定文字を半角スペース区切りで入力してください。'
         end
@@ -55,9 +54,7 @@ RSpec.describe API::Ver1::Poker, type: :request do
 
       context '5th card is incorrect' do
         let(:params) { { "cards": ['H1 H2 H3 H4 H100'] } }
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
+        it_behaves_like 'return http status code 400'
         it 'return error message' do
           expect(error_msg).to eq '5番目のカード指定文字(H100)が不正です。'
         end
@@ -65,9 +62,7 @@ RSpec.describe API::Ver1::Poker, type: :request do
 
       context '2 duplicate cards' do
         let(:params) { { "cards": ['H1 H2 H3 H4 H1'] } }
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
+        it_behaves_like 'return http status code 400'
         it 'return error message' do
           expect(error_msg).to eq 'カードが重複しています。'
         end
@@ -81,63 +76,37 @@ RSpec.describe API::Ver1::Poker, type: :request do
         post '/api/ver1/poker', params
       end
       let(:error_msg){JSON.parse(response.body)['error'][0]['msg']}
-      context 'value is string class' do
-        let(:params) { { "cards": 'H1 H2 H3 H4 H5' } }
+      shared_examples 'return http status code 400 & error message' do
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
           expect(error_msg).to eq 'カード情報が不正です。'
         end
+      end
+      context 'value is string class' do
+        let(:params) { { "cards": 'H1 H2 H3 H4 H5' } }
+        it_behaves_like 'return http status code 400 & error message'
       end
 
       context 'name of key is incorrect' do
         let(:params) { { "カード": ['H1 H2 H3 H4 H5'] } }
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
-        it 'return error message' do
-          expect(error_msg).to eq 'カード情報が不正です。'
-        end
+        it_behaves_like 'return http status code 400 & error message'
       end
 
       context 'nothing in array' do
         let(:params) { { "cards": [] } }
-        before do
-          post '/api/ver1/poker', params
-        end
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
-        it 'return error message' do
-          expect(error_msg).to eq 'カード情報が不正です。'
-        end
+        it_behaves_like 'return http status code 400 & error message'
       end
 
       context 'nothing in hash' do
         let(:params) { {} }
-        before do
-          post '/api/ver1/poker', params
-        end
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
-        it 'return error message' do
-          expect(error_msg).to eq 'カード情報が不正です。'
-        end
+        it_behaves_like 'return http status code 400 & error message'
       end
 
       context 'hash does not exist' do
         let(:params) {}
-        before do
-          post '/api/ver1/poker', params
-        end
-        it 'return http sratus code 400' do
-          expect(response).to have_http_status(400)
-        end
-        it 'return error message' do
-          expect(error_msg).to eq 'カード情報が不正です。'
-        end
+        it_behaves_like 'return http status code 400 & error message'
       end
     end
 
