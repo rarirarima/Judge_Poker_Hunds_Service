@@ -5,13 +5,11 @@ module ErrorService
   def process_errors(cards, service)
     if cards.blank?
       error_msg = 'カードが入力されていません。'
-    elsif !cards.is_a?(String)
+    elsif !cards.is_a?(String) || cards !~ /^(\w+\s){4}\w+$/
       error_msg = '5つのカード指定文字を半角スペース区切りで入力してください。'
     else
       card_array = cards.split(' ')
-      error_msg = if card_array.size != 5
-                    '5つのカード指定文字を半角スペース区切りで入力してください。'
-                  elsif incorrect_card_error(card_array, service)
+      error_msg = if incorrect_card_error(card_array, service)
                     incorrect_card_error(card_array, service)
                   elsif repeat_error?(card_array)
                     'カードが重複しています。'
