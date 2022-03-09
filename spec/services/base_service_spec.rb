@@ -218,7 +218,7 @@ RSpec.describe BaseService do
       }
     end
 
-    context '2 best card' do
+    context '2 best cards' do
       let(:cards_list) do
         [
           'S1 S2 S11 S12 S13',

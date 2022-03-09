@@ -7,8 +7,6 @@ module API
         requires :cards, type: Array
       end
 
-      # error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400) if ['cards'].nil?
-
       post '/ver1/poker' do
         cards = params[:cards]
         if cards.empty?
