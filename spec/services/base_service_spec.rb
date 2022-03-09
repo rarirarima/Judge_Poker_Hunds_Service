@@ -66,12 +66,12 @@ RSpec.describe BaseService do
         it { is_expected.to eq 'カードが入力されていません。' }
       end
 
-      context 'less than 5 blocks' do
+      context 'less than 5 cards' do
         let(:cards_list) { 'H2 S2 C3 D4' }
         it { is_expected.to eq '5つのカード指定文字を半角スペース区切りで入力してください。' }
       end
 
-      context 'more than 5 blocks' do
+      context 'more than 5 cards' do
         let(:cards_list) { 'D2 S5 H1 C3 S9 S13' }
         it { is_expected.to eq '5つのカード指定文字を半角スペース区切りで入力してください。' }
       end
@@ -90,12 +90,12 @@ RSpec.describe BaseService do
         }
       end
 
-      context 'the suit of 1st card does not exist' do
+      context 'the suit of 1st card is incorrect' do
         let(:cards_list) { 'X1 S2 C8 D10 H13' }
         it { is_expected.to eq "1番目のカード指定文字(X1)が不正です。\n半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。" }
       end
 
-      context 'the suit of all cards does not exist' do
+      context 'the suit of all cards is incorrect' do
         let(:cards_list) { 'V2 W3 X7 Y8 Z13' }
         it {
           is_expected.to eq "1番目のカード指定文字(V2)が不正です。\n2番目のカード指定文字(W3)が不正です。\n" \
@@ -104,12 +104,12 @@ RSpec.describe BaseService do
         }
       end
 
-      context 'the number of 1st card does not exist' do
+      context 'the number of 1st card is incorrect' do
         let(:cards_list) { 'C99 D1 H3 D4 H5' }
         it { is_expected.to eq "1番目のカード指定文字(C99)が不正です。\n半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。" }
       end
 
-      context 'the number of all cards does not exist' do
+      context 'the number of all cards is incorrect' do
         let(:cards_list) { 'C0 D14 H99 S100 H10000' }
         it {
           is_expected.to eq "1番目のカード指定文字(C0)が不正です。\n2番目のカード指定文字(D14)が不正です。\n" \
