@@ -1,23 +1,27 @@
 module BaseService
-  class Summarize
+  class Base
     include ErrorService
     include JudgeService
     include StrengthService
     include ErrorService
 
-    def api_or_webapp(cards_list)
-      if cards_list.is_a?(Array)
-        api(cards_list)
+    def initialize(cards)
+      @cards_list = cards
+    end
+
+    def api_or_webapp
+      if @cards_list.is_a?(Array)
+        api
       else
-        webapp(cards_list)
+        webapp
       end
     end
 
-    def api(cards_list)
+    def api
       result = []
       @error = []
       strength_ar = []
-      cards_list.each do |cards|
+      @cards_list.each do |cards|
         if ErrorService.process_errors(cards, API)
           api_error_msg = ErrorService.process_errors(cards, API)
           api_error(cards, api_error_msg, @error)
@@ -59,8 +63,8 @@ module BaseService
       error
     end
 
-    def webapp(cards_list)
-      ErrorService.process_errors(cards_list, WEB_APP) || JudgeService.search_hands(cards_list)[0]
+    def webapp
+      ErrorService.process_errors(@cards_list, WEB_APP) || JudgeService.search_hands(@cards_list)[0]
     end
   end
 end

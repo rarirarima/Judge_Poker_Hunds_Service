@@ -13,11 +13,11 @@ module API
           error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400)
         else
           status 200
-          summarize = BaseService::Summarize.new
-          if summarize.api_or_webapp(cards).include?(:error) && !summarize.api_or_webapp(cards).include?(:result)
+          base_service = BaseService::Base.new(cards)
+          if base_service.api_or_webapp.include?(:error) && !base_service.api_or_webapp.include?(:result)
             status 400
           end
-          summarize.api_or_webapp(cards)
+          base_service.api_or_webapp
         end
       end
     end
