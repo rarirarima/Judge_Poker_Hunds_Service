@@ -19,68 +19,57 @@ RSpec.describe API::Ver1::Poker, type: :request do
     end
 
     describe 'self-made error' do
+      before do
+        post '/api/ver1/poker', params
+      end
+      let(:error_msg){JSON.parse(response.body)['error'][0]['msg']}
       context 'nothing is entered' do
         let(:params) { { "cards": [''] } }
-        before do
-          post '/api/ver1/poker', params
-        end
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カードが入力されていません。'
+          expect(error_msg).to eq 'カードが入力されていません。'
         end
       end
 
       context 'less than 5 cards' do
         let(:params) { { "cards": ['H1 H2 H3 H4'] } }
-        before do
-          post '/api/ver1/poker', params
-        end
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq '5つのカード指定文字を半角スペース区切りで入力してください。'
+          expect(error_msg).to eq '5つのカード指定文字を半角スペース区切りで入力してください。'
         end
       end
 
       context 'integer value in array' do
         let(:params) { { "cards": [123] } }
-        before do
-          post '/api/ver1/poker', params
-        end
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq '5つのカード指定文字を半角スペース区切りで入力してください。'
+          expect(error_msg).to eq '5つのカード指定文字を半角スペース区切りで入力してください。'
         end
       end
 
       context '5th card is incorrect' do
         let(:params) { { "cards": ['H1 H2 H3 H4 H100'] } }
-        before do
-          post '/api/ver1/poker', params
-        end
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq '5番目のカード指定文字(H100)が不正です。'
+          expect(error_msg).to eq '5番目のカード指定文字(H100)が不正です。'
         end
       end
 
       context '2 duplicate cards' do
         let(:params) { { "cards": ['H1 H2 H3 H4 H1'] } }
-        before do
-          post '/api/ver1/poker', params
-        end
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カードが重複しています。'
+          expect(error_msg).to eq 'カードが重複しています。'
         end
       end
     end
@@ -88,29 +77,27 @@ RSpec.describe API::Ver1::Poker, type: :request do
 
   describe 'validation error' do
     describe 'when request incorrect cards' do
+      before do
+        post '/api/ver1/poker', params
+      end
+      let(:error_msg){JSON.parse(response.body)['error'][0]['msg']}
       context 'value is string class' do
         let(:params) { { "cards": 'H1 H2 H3 H4 H5' } }
-        before do
-          post '/api/ver1/poker', params
-        end
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カード情報が不正です。'
+          expect(error_msg).to eq 'カード情報が不正です。'
         end
       end
 
       context 'name of key is incorrect' do
         let(:params) { { "カード": ['H1 H2 H3 H4 H5'] } }
-        before do
-          post '/api/ver1/poker', params
-        end
         it 'return http sratus code 400' do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カード情報が不正です。'
+          expect(error_msg).to eq 'カード情報が不正です。'
         end
       end
 
@@ -123,7 +110,7 @@ RSpec.describe API::Ver1::Poker, type: :request do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カード情報が不正です。'
+          expect(error_msg).to eq 'カード情報が不正です。'
         end
       end
 
@@ -136,7 +123,7 @@ RSpec.describe API::Ver1::Poker, type: :request do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カード情報が不正です。'
+          expect(error_msg).to eq 'カード情報が不正です。'
         end
       end
 
@@ -149,7 +136,7 @@ RSpec.describe API::Ver1::Poker, type: :request do
           expect(response).to have_http_status(400)
         end
         it 'return error message' do
-          expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カード情報が不正です。'
+          expect(error_msg).to eq 'カード情報が不正です。'
         end
       end
     end
