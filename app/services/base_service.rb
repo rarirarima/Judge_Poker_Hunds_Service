@@ -3,7 +3,6 @@ module BaseService
     include ErrorService
     include JudgeService
     include StrengthService
-    include ErrorService
 
     def initialize(cards)
       @cards_list = cards
