@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe BaseService do
   describe 'String request' do
     describe 'Judge hunds' do
-      let(:summary) { BaseService::Summarize.new }
-      subject { summary.api_or_webapp(cards_list) }
+      let(:base_service) { BaseService::Base.new(cards_list) }
+      subject { base_service.api_or_webapp }
 
       context 'all the same suit & 5 straight number' do
         let(:cards_list) { 'H1 H2 H3 H4 H13' }
@@ -53,8 +53,8 @@ RSpec.describe BaseService do
     end
 
     describe 'error' do
-      let(:summary) { BaseService::Summarize.new }
-      subject { summary.api_or_webapp(cards_list) }
+      let(:base_service) { BaseService::Base.new(cards_list) }
+      subject { base_service.api_or_webapp }
 
       context 'no card' do
         let(:cards_list) { '' }
@@ -110,10 +110,10 @@ RSpec.describe BaseService do
       end
 
       context 'the number of all cards does not exist' do
-        let(:cards_list) { 'C0 D14 H-1 S100 H10000' }
+        let(:cards_list) { 'C0 D14 H99 S100 H10000' }
         it {
           is_expected.to eq "1番目のカード指定文字(C0)が不正です。\n2番目のカード指定文字(D14)が不正です。\n" \
-                            "3番目のカード指定文字(H-1)が不正です。\n4番目のカード指定文字(S100)が不正です。\n" \
+                            "3番目のカード指定文字(H99)が不正です。\n4番目のカード指定文字(S100)が不正です。\n" \
                             "5番目のカード指定文字(H10000)が不正です。\n半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。"
         }
       end
@@ -131,8 +131,8 @@ RSpec.describe BaseService do
   end
 
   describe 'Array request' do
-    let(:summary) { BaseService::Summarize.new }
-    subject { summary.api_or_webapp(cards_list) }
+    let(:base_service) { BaseService::Base.new(cards_list) }
+    subject { base_service.api_or_webapp }
 
     context 'one card in array' do
       let(:cards_list) { ['H1 H2 H3 H4 H13'] }
