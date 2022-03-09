@@ -14,9 +14,7 @@ module API
         else
           status 200
           base_service = BaseService::Base.new(cards)
-          if base_service.api_or_webapp.include?(:error) && !base_service.api_or_webapp.include?(:result)
-            status 400
-          end
+          status 400 if base_service.api_or_webapp.include?(:error) && !base_service.api_or_webapp.include?(:result)
           base_service.api_or_webapp
         end
       end
