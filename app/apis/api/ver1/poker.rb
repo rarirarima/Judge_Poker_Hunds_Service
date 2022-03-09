@@ -2,15 +2,14 @@ module API
   module Ver1
     class Poker < Grape::API
       include BaseService
-      require 'json'
-      # format :json
 
       params do
         requires :cards, type: Array
       end
-      error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400) if ['cards'].nil?
+
+      # error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400) if ['cards'].nil?
+
       post '/ver1/poker' do
-        content_type 'application/json'
         cards = params[:cards]
         if cards.empty?
           error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400)

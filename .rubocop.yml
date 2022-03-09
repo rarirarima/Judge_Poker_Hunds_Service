@@ -1,1 +1,11 @@
 inherit_from: .rubocop_todo.yml
+Style/Documentation:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/MutableConstant:
+  Enabled: false
+Metrics:
+  Enabled: false

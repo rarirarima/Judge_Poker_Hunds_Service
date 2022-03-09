@@ -4,21 +4,20 @@ module ErrorService
 
   def process_errors(cards, service)
     if cards.blank?
-      msg = 'カードが入力されていません。'
+      error_msg = 'カードが入力されていません。'
     elsif !cards.is_a?(String)
-      msg = '5つのカード指定文字を半角スペース区切りで入力してください。'
+      error_msg = '5つのカード指定文字を半角スペース区切りで入力してください。'
     else
       card_array = cards.split(' ')
-      if card_array.size != 5
-        msg = '5つのカード指定文字を半角スペース区切りで入力してください。'
-      elsif incorrect_card_error(card_array, service)
-        msg = incorrect_card_error(card_array, service)
-      elsif repeat_error?(card_array)
-        msg = 'カードが重複しています。'
-      else
-        false
-      end
+      error_msg = if card_array.size != 5
+                    '5つのカード指定文字を半角スペース区切りで入力してください。'
+                  elsif incorrect_card_error(card_array, service)
+                    incorrect_card_error(card_array, service)
+                  elsif repeat_error?(card_array)
+                    'カードが重複しています。'
+                  end
     end
+    error_msg
   end
 
   def incorrect_card_error(card_array, service)
@@ -31,7 +30,7 @@ module ErrorService
     card_array.each.with_index do |card, i|
       incorrect_error_msg += "#{i + 1}番目のカード指定文字(#{card})が不正です。\n" if incorrect_card?(card)
     end
-    incorrect_error_msg.blank? ? false : incorrect_error_msg + '半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。'
+    incorrect_error_msg.blank? ? false : "#{incorrect_error_msg}半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。"
   end
 
   # APIはエラーメッセージを配列にして返す=>不正カード1枚ごとに1Hashでエラーを表示

@@ -3,9 +3,7 @@ module API
     prefix 'api'
 
     content_type :json, 'application/json'
-    content_type :txt, 'text/plain'
-    content_type :xml, 'application/xml'
-
+    format :json
     default_format :json
 
     rescue_from Grape::Exceptions::ValidationErrors do |_e|

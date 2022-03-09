@@ -19,16 +19,16 @@ module BaseService
       strength_ar = []
       cards_list.each do |cards|
         if ErrorService.process_errors(cards, API)
-          api_error = ErrorService.process_errors(cards, API)
-          api_error(cards, api_error, @error)
+          api_error_msg = ErrorService.process_errors(cards, API)
+          api_error(cards, api_error_msg, @error)
         else
           result_elements = {
             "card": cards,
-            "hand": JudgeService.search_hands(cards),
+            "hand": JudgeService.search_hands(cards)[0],
             "best": false
           }
           result.push(result_elements)
-          strength_ar.push($hand_strength)
+          strength_ar.push(JudgeService.search_hands(cards)[1])
         end
       end
       result = StrengthService.decide_best(strength_ar, result)
@@ -40,19 +40,19 @@ module BaseService
       response
     end
 
-    def api_error(cards, api_error, error)
-      if api_error.is_a?(Array)
-        api_error.each do |error_message|
+    def api_error(cards, api_error_msg, error)
+      if api_error_msg.is_a?(Array)
+        api_error_msg.each do |error_msg|
           error_elements = {
             "card": cards,
-            "msg": error_message
+            "msg": error_msg
           }
           error.push(error_elements)
         end
       else
         error_elements = {
           "card": cards,
-          "msg": api_error
+          "msg": api_error_msg
         }
         error.push(error_elements)
       end
@@ -60,7 +60,7 @@ module BaseService
     end
 
     def webapp(cards_list)
-      ErrorService.process_errors(cards_list, WEB_APP) || JudgeService.search_hands(cards_list)
+      ErrorService.process_errors(cards_list, WEB_APP) || JudgeService.search_hands(cards_list)[0]
     end
   end
 end
