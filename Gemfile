@@ -53,3 +53,10 @@ end
 group :development do
   gem 'rubocop', require: false
 end
+
+gem 'ruby-debug-ide'
+gem 'debase'
+
+group :development, :test do
+  gem 'pry-rails'
+end
