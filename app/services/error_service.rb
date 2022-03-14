@@ -18,26 +18,19 @@ module ErrorService
     error_msg
   end
 
+  # カード指定文字不正のエラーメッセージをWebAPPは文字列、APIは配列(不正カード1枚につき1ハッシュを用意するため)を返す
   def incorrect_card_error(card_array, service)
-    service == WEB_APP ? incorrect_card_error_webapp(card_array) : incorrect_card_error_api(card_array)
-  end
-
-  # WebAPPはエラーメッセージを文字列で返す
-  def incorrect_card_error_webapp(card_array)
-    incorrect_error_msg = ''
+    incorrect_error_msg_ar = []
     card_array.each.with_index do |card, i|
-      incorrect_error_msg += "#{i + 1}番目のカード指定文字(#{card})が不正です。\n" if incorrect_card?(card)
+      incorrect_error_msg_ar.push("#{i + 1}番目のカード指定文字(#{card})が不正です。") if incorrect_card?(card)
     end
-    incorrect_error_msg.blank? ? false : "#{incorrect_error_msg}半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。"
-  end
-
-  # APIはエラーメッセージを配列にして返す=>不正カード1枚ごとに1Hashでエラーを表示
-  def incorrect_card_error_api(card_array)
-    incorrrect_card_array = []
-    card_array.each.with_index do |card, i|
-      incorrrect_card_array.push("#{i + 1}番目のカード指定文字(#{card})が不正です。") if incorrect_card?(card)
+    if incorrect_error_msg_ar.blank?
+      false
+    elsif service == WEB_APP
+      incorrect_error_msg_str = "#{incorrect_error_msg_ar.join("\n")}\n半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。"
+    else
+      incorrect_error_msg_ar
     end
-    incorrrect_card_array.blank? ? false : incorrrect_card_array
   end
 
   def incorrect_card?(card)
@@ -48,6 +41,5 @@ module ErrorService
     true if cards_array.uniq.count != 5
   end
 
-  module_function :process_errors, :incorrect_card_error, :incorrect_card_error_webapp, :incorrect_card_error_api,
-                  :incorrect_card?, :repeat_error?
+  module_function :process_errors, :incorrect_card_error, :incorrect_card?, :repeat_error?
 end
