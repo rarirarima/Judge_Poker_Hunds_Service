@@ -130,18 +130,18 @@ RSpec.describe API::Ver1::Poker, type: :request do
     #     end
     #   end
 
-      # context '配列が不正' do
-      #   let(:params){{"cards": "H1 H2 H3 H4 H5"}}
-      #   before do
-      #     post "/api/ver1/poker", params
-      #   end
-      #   it 'return http sratus code 400' do
-      #     expect(response).to have_http_status(400)
-      #   end
-      #   it 'return error message' do
-      #     expect(JSON.parse(response.body)["error"][0]["msg"]).to eq "JSON形式が不正です。"
-      #   end
-      # end
+    # context '配列が不正' do
+    #   let(:params){{"cards": "H1 H2 H3 H4 H5"}}
+    #   before do
+    #     post "/api/ver1/poker", params
+    #   end
+    #   it 'return http sratus code 400' do
+    #     expect(response).to have_http_status(400)
+    #   end
+    #   it 'return error message' do
+    #     expect(JSON.parse(response.body)["error"][0]["msg"]).to eq "JSON形式が不正です。"
+    #   end
+    # end
     # end
   end
 end
