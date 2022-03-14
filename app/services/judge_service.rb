@@ -40,16 +40,8 @@ module JudgeService
   end
 
   def over_straight?
-    over_straight_arrays = [
-      [1, 2, 3, 4, 13],
-      [1, 2, 3, 12, 13],
-      [1, 2, 11, 12, 13],
-      [1, 10, 11, 12, 13]
-    ]
-    over_straight_arrays.each do |array|
-      return true if array.all? { |i| @nums_int.include?(i) }
-    end
-    false
+    over_straight_array = [1, 10, 11, 12, 13]
+    return true if over_straight_array.all? { |i| @nums_int.include?(i) }
   end
 
   def all_unique?

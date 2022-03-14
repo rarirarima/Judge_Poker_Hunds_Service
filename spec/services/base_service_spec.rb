@@ -7,7 +7,7 @@ RSpec.describe BaseService do
       subject { base_service.api_or_webapp }
 
       context 'all the same suit & 5 straight number' do
-        let(:cards_list) { 'H1 H2 H3 H4 H13' }
+        let(:cards_list) { 'H1 H2 H3 H4 H5' }
         it { is_expected.to eq 'ストレートフラッシュ' }
       end
 
@@ -135,12 +135,12 @@ RSpec.describe BaseService do
     subject { base_service.api_or_webapp }
 
     context 'one card in array' do
-      let(:cards_list) { ['H1 H2 H3 H4 H13'] }
+      let(:cards_list) { ['H1 H10 H11 H12 H13'] }
       it {
         is_expected.to eq({
                             "result": [
                               {
-                                "card": 'H1 H2 H3 H4 H13',
+                                "card": 'H1 H10 H11 H12 H13',
                                 "hand": 'ストレートフラッシュ',
                                 "best": true
                               }
@@ -152,7 +152,7 @@ RSpec.describe BaseService do
     context 'all hunds request' do
       let(:cards_list) do
         [
-          'H1 H2 H3 H4 H13',
+          'H1 H10 H11 H12 H13',
           'C1 D1 H1 S1 H7',
           'C3 D3 H3 S10 D10',
           'D2 D3 D6 D8 D13',
@@ -168,7 +168,7 @@ RSpec.describe BaseService do
           {
             "result": [
               {
-                "card": 'H1 H2 H3 H4 H13',
+                "card": 'H1 H10 H11 H12 H13',
                 "hand": 'ストレートフラッシュ',
                 "best": true
               },
@@ -221,7 +221,7 @@ RSpec.describe BaseService do
     context '2 best cards' do
       let(:cards_list) do
         [
-          'S1 S2 S11 S12 S13',
+          'S1 S10 S11 S12 S13',
           'H6 H7 H8 H9 H10'
         ]
       end
@@ -229,7 +229,7 @@ RSpec.describe BaseService do
         is_expected.to eq({
                             "result": [
                               {
-                                "card": 'S1 S2 S11 S12 S13',
+                                "card": 'S1 S10 S11 S12 S13',
                                 "hand": 'ストレートフラッシュ',
                                 "best": true
                               },

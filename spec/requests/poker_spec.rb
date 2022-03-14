@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe API::Ver1::Poker, type: :request do
   describe 'POST API' do
     context 'correct cards' do
-      let(:params) { { "cards": ['H1 H2 H3 H4 H13', 'S1 D1 C1 H1 H10'] } }
+      let(:params) { { "cards": ['H1 H2 H3 H4 H5', 'S1 D1 C1 H1 H10'] } }
       before do
         post '/api/ver1/poker', params
       end
