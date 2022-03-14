@@ -54,8 +54,8 @@ module JudgeService
 
   def number_card?(number)
     numeric_list = count_card_number
-    numeric_list.each_value do |v|
-      return true if v == number
+    numeric_list.each do |i|
+      return true if i == number
     end
     false
   end
@@ -63,8 +63,8 @@ module JudgeService
   def two_pair?
     numeric_list = count_card_number
     pair_count = 0
-    numeric_list.each_value do |v|
-      next unless v == 2
+    numeric_list.each do |i|
+      next unless i == 2
 
       pair_count += 1
       return true if pair_count == 2
@@ -73,10 +73,9 @@ module JudgeService
   end
 
   def count_card_number
-    numeric_list = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0, 11 => 0, 12 => 0,
-                     13 => 0 }
+    numeric_list = Array.new(13, 0)
     @nums_int.each do |num|
-      numeric_list[num] += 1
+      numeric_list[num - 1] += 1
     end
     numeric_list
   end
