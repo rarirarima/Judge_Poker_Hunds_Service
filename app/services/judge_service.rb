@@ -1,6 +1,6 @@
 module JudgeService
-  # cards = "H3 H4 H5 H6 H7"
-  def search_hands(cards)
+
+  def search_hands(cards) # cards = "H3 H4 H5 H6 H7"
     @suits = cards.scan(/[CDHS]/) # @suits=["H", "H", "H", "H", "H"]
     nums_str = cards.scan(/1[0-3]|[1-9]/)
     @nums_int = nums_str.map(&:to_i) # @nums_int=[3, 4, 5, 6, 7]
@@ -9,7 +9,7 @@ module JudgeService
 
   def decide_hands
     if straight? && flush?
-      ['ストレートフラッシュ', 8]
+      ['ストレートフラッシュ', 8] # [役, 強さを表す数字]
     elsif number_card?(4)
       ['フォー・オブ・ア・カインド', 7]
     elsif number_card?(3) && number_card?(2)
