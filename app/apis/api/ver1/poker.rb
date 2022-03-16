@@ -3,8 +3,20 @@ module API
     class Poker < Grape::API
       include BaseService
 
+      format :json
+      content_type :json, 'application/json'
+      content_type :xml, 'application/xml'
+      content_type :javascript, 'application/javascript'
+      content_type :txt, 'text/plain'
+      content_type :html, 'text/html'
+      default_format :json
+
       params do
         requires :cards, type: Array
+      end
+
+      rescue_from :all do |_e|
+        error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400)
       end
 
       post '/ver1/poker' do
