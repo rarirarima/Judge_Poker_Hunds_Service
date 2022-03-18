@@ -19,7 +19,7 @@ module BaseService
     def api
       result = []
       @error = []
-      strength_ar = []
+      strength_array = []
       @cards_list.each do |cards|
         if ErrorService.process_errors(cards, API)
           api_error_msg = ErrorService.process_errors(cards, API)
@@ -31,10 +31,10 @@ module BaseService
             "best": false
           }
           result.push(result_elements)
-          strength_ar.push(JudgeService.search_hands(cards)[1])
+          strength_array.push(JudgeService.search_hands(cards)[1])
         end
       end
-      result = StrengthService.decide_best(strength_ar, result)
+      result = StrengthService.decide_best(strength_array, result)
       response = {
         "result": result,
         "error": @error
