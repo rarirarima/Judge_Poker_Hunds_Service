@@ -15,14 +15,17 @@ module API
         requires :cards, type: Array
       end
 
+      card_info_error = 'カード情報が不正です'
+
+      #JSON形式以外でリクエストされた場合
       rescue_from :all do |_e|
-        error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400)
+        error!({ error: [{ msg: card_info_error }] }, 400)
       end
 
       post '/ver1/poker' do
         cards = params[:cards]
         if cards.empty?
-          error!({ error: [{ msg: 'カード情報が不正です。' }] }, 400)
+          error!({ error: [{ msg: card_info_error }] }, 400)
         else
           status 200
           base_service = BaseService::Base.new(cards)
