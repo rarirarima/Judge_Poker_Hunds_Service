@@ -54,8 +54,8 @@ group :development do
   gem 'rubocop', require: false
 end
 
-gem 'ruby-debug-ide'
 gem 'debase'
+gem 'ruby-debug-ide'
 
 group :development, :test do
   gem 'pry-rails'
