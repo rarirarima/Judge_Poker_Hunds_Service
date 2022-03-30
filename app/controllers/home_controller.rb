@@ -1,14 +1,14 @@
 class HomeController < ApplicationController
-  include BaseService
+  include ErrorService
+  include JudgeService
 
   def top; end
 
   def show
     cards = params[:cards]
     flash[:cards] = cards
-    base_service = BaseService::Base.new(cards)
-    message = base_service.api_or_webapp
-    flash[:message] = message
-    redirect_to 'http://localhost:3000'
+    message = ErrorService.process_errors(cards) || JudgeService.search_hands(cards)[:name]
+    flash[:message] = message.is_a?(Array) ? message.join("\n") : message
+    redirect_to '/'
   end
 end
