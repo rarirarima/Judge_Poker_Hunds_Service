@@ -114,5 +114,18 @@ RSpec.describe API::Ver1::Poker, type: :request do
         it_behaves_like 'return http status code 400 & error message'
       end
     end
+
+    describe 'when GET' do
+      before do
+        get '/api/ver1/poker'
+      end
+      it 'return http status code 400' do
+        expect(response).to have_http_status 400
+      end
+
+      it 'return incorrecr-card-infomation message' do
+        expect(JSON.parse(response.body)['error'][0]['msg']).to eq 'カード情報が不正です。'
+      end
+    end
   end
 end
