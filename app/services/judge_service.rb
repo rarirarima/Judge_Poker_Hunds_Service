@@ -1,5 +1,6 @@
 module JudgeService
   include ErrorService
+  
   def search_hands(cards)
     @suits = cards.scan(/[CDHS]/) # @suits=["H", "H", "H", "H", "H"]
     @nums_int = cards.scan(/1[0-3]|[1-9]/).map(&:to_i) # @nums_int=[3, 4, 5, 6, 7]
