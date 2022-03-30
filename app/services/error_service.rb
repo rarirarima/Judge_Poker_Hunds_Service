@@ -5,7 +5,7 @@ module ErrorService
   def process_errors(cards)
     if card_blank_error?(cards)
       'カードが入力されていません。'
-    elsif invalid_card_error?(cards)
+    elsif card_class_error?(cards) || not_five_cards_error?(cards)
       '5つのカード指定文字を半角スペース区切りで入力してください。'
     else
       card_array = cards.split(' ')
@@ -18,12 +18,17 @@ module ErrorService
     cards.blank?
   end
 
-  # カードリクエストがStringではない場合orカードが5枚ではない場合(全角スペース, 先頭と末尾の半角スペースはエラー)
-  def invalid_card_error?(cards)
-    true if !cards.is_a?(String) || cards !~ FIVE_CARDS
+  # カードリクエストがStringではない場合
+  def card_class_error?(cards)
+    true unless cards.is_a?(String)
   end
 
-  # カード指定文字不正のエラーメッセージを配列でを返す
+  # カードが5枚ではない場合(全角スペース, 先頭と末尾のスペースはエラー)
+  def not_five_cards_error?(cards)
+    true if cards !~ FIVE_CARDS
+  end
+
+  # カード指定文字不正のエラーメッセージを配列で返す
   def incorrect_card_error(card_array)
     incorrect_error_msgs = []
     card_array.each.with_index do |card, i|
@@ -40,6 +45,6 @@ module ErrorService
     'カードが重複しています。' if cards_array.uniq.count != 5
   end
 
-  module_function :process_errors, :card_blank_error?, :invalid_card_error?, :incorrect_card_error,
-                  :incorrect_card?, :repeat_error
+  module_function :process_errors, :card_blank_error?, :card_class_error?, :not_five_cards_error?,
+                  :incorrect_card_error, :incorrect_card?, :repeat_error
 end
