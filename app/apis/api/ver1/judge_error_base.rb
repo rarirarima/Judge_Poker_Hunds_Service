@@ -13,7 +13,7 @@ module JudgeErrorBase
       @error = []
       strengths = []
       @cards_list.each do |cards|
-        cards = summarize_space_to_one(cards)
+        cards = summarize_space_to_one(cards) # カード間のスペースを一つにまとめる
         if ErrorService.process_errors(cards)
           api_error_msg = ErrorService.process_errors(cards)
           api_error(cards, api_error_msg, @error)
@@ -32,11 +32,11 @@ module JudgeErrorBase
         "result": result,
         "error": @error
       }
-      response.delete_if { |_key, value| value.blank? == true }
+      response.delete_if { |_key, value| value.blank? == true } # resultまたはerrorのvalueが空であればkeyを削除
     end
 
     def api_error(cards, api_error_msg, error)
-      if api_error_msg.is_a?(Array)
+      if api_error_msg.is_a?(Array) # Arrayであれば指定文字エラー
         api_error_msg.each do |error_msg|
           error_elements = {
             "card": cards,
@@ -44,7 +44,7 @@ module JudgeErrorBase
           }
           error.push(error_elements)
         end
-      else
+      else # Stringであればそれ以外のエラー
         error_elements = {
           "card": cards,
           "msg": api_error_msg
