@@ -12,7 +12,8 @@ module JudgeErrorBase
       result = []
       @error = []
       strengths = []
-      summarize_space_to_one(@cards_list).each do |cards|
+      @cards_list.each do |cards|
+        cards = summarize_space_to_one(cards)
         if ErrorService.process_errors(cards)
           api_error_msg = ErrorService.process_errors(cards)
           api_error(cards, api_error_msg, @error)
@@ -54,11 +55,8 @@ module JudgeErrorBase
     end
 
     # 半角スペースを一つにまとめる
-    def summarize_space_to_one(cards_list)
-      cards_list.each.with_index do |cards, i|
-        cards_list[i] = cards.split(' ').join(' ')
-      end
-      cards_list
+    def summarize_space_to_one(cards)
+      cards.split(' ').join(' ')
     end
   end
 end
