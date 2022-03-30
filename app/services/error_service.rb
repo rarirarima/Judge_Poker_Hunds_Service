@@ -1,45 +1,45 @@
 module ErrorService
-  WEB_APP = 'webapp'
-  API = 'api'
+  FIVE_CARDS = /^(\w+\s+){4}\w+$/
+  CORRECT_CARD = /^([CDHS])([1-9]|1[0-3])$/
 
-  def process_errors(cards, service)
-    if cards.blank?
-      error_msg = 'カードが入力されていません。'
-    elsif !cards.is_a?(String) || cards !~ /^(\w+\s){4}\w+$/
-      error_msg = '5つのカード指定文字を半角スペース区切りで入力してください。'
+  def process_errors(cards)
+    if card_blank_error?(cards)
+      'カードが入力されていません。'
+    elsif invalid_card_error?(cards)
+      '5つのカード指定文字を半角スペース区切りで入力してください。'
     else
       card_array = cards.split(' ')
-      error_msg = if incorrect_card_error(card_array, service)
-                    incorrect_card_error(card_array, service)
-                  elsif repeat_error?(card_array)
-                    'カードが重複しています。'
-                  end
+      incorrect_card_error(card_array) || repeat_error(card_array)
     end
-    error_msg
   end
 
-  # カード指定文字不正のエラーメッセージをWebAPPは文字列、APIは配列(不正カード1枚につき1ハッシュを用意するため)を返す
-  def incorrect_card_error(card_array, service)
-    incorrect_error_msg_ar = []
+  # カードが未入力or空文字列
+  def card_blank_error?(cards)
+    cards.blank?
+  end
+
+  # カードリクエストがStringではない場合orカードが5枚ではない場合(全角スペース, 先頭と末尾の半角スペースはエラー)
+  def invalid_card_error?(cards)
+    true if !cards.is_a?(String) || cards !~ FIVE_CARDS
+  end
+
+  # カード指定文字不正のエラーメッセージを配列でを返す
+  def incorrect_card_error(card_array)
+    incorrect_error_msgs = []
     card_array.each.with_index do |card, i|
-      incorrect_error_msg_ar.push("#{i + 1}番目のカード指定文字(#{card})が不正です。") if incorrect_card?(card)
+      incorrect_error_msgs.push("#{i + 1}番目のカード指定文字(#{card})が不正です。") if incorrect_card?(card)
     end
-    if incorrect_error_msg_ar.blank?
-      false
-    elsif service == WEB_APP
-      incorrect_error_msg_str = "#{incorrect_error_msg_ar.join("\n")}\n半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）の組み合わせでカードを指定してください。"
-    else
-      incorrect_error_msg_ar
-    end
+    incorrect_error_msgs.blank? ? nil : incorrect_error_msgs
   end
 
   def incorrect_card?(card)
-    true if /^[CDHS]{1}([1-9]|1[0-3]){1}$/ !~ card
+    true if card !~ CORRECT_CARD
   end
 
-  def repeat_error?(cards_array)
-    true if cards_array.uniq.count != 5
+  def repeat_error(cards_array)
+    'カードが重複しています。' if cards_array.uniq.count != 5
   end
 
-  module_function :process_errors, :incorrect_card_error, :incorrect_card?, :repeat_error?
+  module_function :process_errors, :card_blank_error?, :invalid_card_error?, :incorrect_card_error,
+                  :incorrect_card?, :repeat_error
 end
