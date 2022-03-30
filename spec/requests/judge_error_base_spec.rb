@@ -60,9 +60,15 @@ RSpec.describe JudgeErrorBase do
         expect(best_count).to eq 3
       end
 
-      it '1st & 10th & 11th result is best' do
+      it '1st result is best' do
         expect(api_response[:result][0][:best]).to eq true
+      end
+
+      it '1st result is best' do
         expect(api_response[:result][9][:best]).to eq true
+      end
+
+      it '1st result is best' do
         expect(api_response[:result][10][:best]).to eq true
       end
 
@@ -104,8 +110,11 @@ RSpec.describe JudgeErrorBase do
         expect(msg_count).to eq 3
       end
 
-      it '1st & last errors are empty-card error' do
+      it '1st error is empty-card error' do
         expect(api_response[:error][0][:msg]).to eq 'カードが入力されていません。'
+      end
+
+      it 'last error is empty-card error' do
         expect(api_response[:error][17][:msg]).to eq 'カードが入力されていません。'
       end
 
