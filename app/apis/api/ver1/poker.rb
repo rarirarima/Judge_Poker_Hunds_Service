@@ -30,9 +30,9 @@ module API
           error!({ error: [{ msg: card_info_error }] }, 400)
         else
           status 200
-          base_service = JudgeErrorBase::Base.new(cards)
-          status 400 if base_service.api.include?(:error) && !base_service.api.include?(:result)
-          base_service.api
+          judge_error_base = JudgeErrorBase::Base.new(cards)
+          status 400 if judge_error_base.process_api.include?(:error) && !judge_error_base.process_api.include?(:result)
+          judge_error_base.process_api
         end
       end
     end
