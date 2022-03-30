@@ -1,85 +1,100 @@
 module JudgeService
-
-  def search_hands(cards) # cards = "H3 H4 H5 H6 H7"
+  include ErrorService
+  def search_hands(cards)
     @suits = cards.scan(/[CDHS]/) # @suits=["H", "H", "H", "H", "H"]
-    nums_str = cards.scan(/1[0-3]|[1-9]/)
-    @nums_int = nums_str.map(&:to_i) # @nums_int=[3, 4, 5, 6, 7]
+    @nums_int = cards.scan(/1[0-3]|[1-9]/).map(&:to_i) # @nums_int=[3, 4, 5, 6, 7]
     decide_hands
   end
 
+  def valid?
+    true if ErrorService.process_errors(cards)
+  end
+
   def decide_hands
-    if straight? && flush?
-      ['ストレートフラッシュ', 8] # [役, 強さを表す数字]
+    if straight_flush?
+      { name: 'ストレートフラッシュ', strength: 8 } # {役, 強さを表す数字}
     elsif number_card?(4)
-      ['フォー・オブ・ア・カインド', 7]
-    elsif number_card?(3) && number_card?(2)
-      ['フルハウス', 6]
+      { name: 'フォー・オブ・ア・カインド', strength: 7 }
+    elsif fullhouse?
+      { name: 'フルハウス', strength: 6 }
     elsif flush?
-      ['フラッシュ', 5]
+      { name: 'フラッシュ', strength: 5 }
     elsif straight?
-      ['ストレート', 4]
+      { name: 'ストレート', strength: 4 }
     elsif number_card?(3)
-      ['スリー・オブ・ア・カインド', 3]
+      { name: 'スリー・オブ・ア・カインド', strength: 3 }
     elsif two_pair?
-      ['ツーペア', 2]
+      { name: 'ツーペア', strength: 2 }
     elsif number_card?(2)
-      ['ワンペア', 1]
+      { name: 'ワンペア', strength: 1 }
     else
-      ['ハイカード', 0]
+      { name: 'ハイカード', strength: 0 }
     end
   end
 
-  def straight?
-    if (@nums_int.sort[4] - @nums_int.min) == 4 && all_unique?
-      true
-    elsif over_straight? && all_unique?
-      true
-    else
-      false
-    end
+  def straight_flush?
+    true if straight? && flush?
   end
 
-  def over_straight?
-    over_straight_array = [1, 10, 11, 12, 13]
-    return true if over_straight_array.all? { |i| @nums_int.include?(i) }
+  def four_of_a_kind?
+    true if number_card?(4)
   end
 
-  def all_unique?
-    true if @nums_int.uniq.count == 5
+  def fullhouse?
+    true if number_card?(3) && number_card?(2)
   end
 
   def flush?
     true if @suits.uniq.count == 1
   end
 
-  def number_card?(number)
-    numeric_list = count_card_number
-    numeric_list.each do |i|
-      return true if i == number
+  def straight?
+    if (@nums_int.sort[4] - @nums_int.min) == 4 && all_unique?
+      true
+    elsif royal_straight? && all_unique?
+      true
+    else
+      false
     end
-    false
+  end
+
+  def three_of_a_kind?
+    true if number_card?(3)
   end
 
   def two_pair?
-    numeric_list = count_card_number
-    pair_count = 0
-    numeric_list.each do |i|
-      next unless i == 2
+    true if count_card_num.count(2) == 2
+  end
 
-      pair_count += 1
-      return true if pair_count == 2
+  def one_pair?
+    true if number_card?(2)
+  end
+
+  def royal_straight?
+    royal_straight_array = [1, 10, 11, 12, 13]
+    return true if royal_straight_array.all? { |i| @nums_int.include?(i) }
+  end
+
+  def all_unique?
+    true if @nums_int.uniq.count == 5
+  end
+
+  def number_card?(number)
+    count_card_num.each do |count|
+      return true if count == number
     end
     false
   end
 
-  def count_card_number
-    numeric_list = Array.new(13, 0)
+  def count_card_num
+    num_list = Array.new(13, 0)
     @nums_int.each do |num|
-      numeric_list[num - 1] += 1
+      num_list[num - 1] += 1
     end
-    numeric_list
+    num_list
   end
 
-  module_function :search_hands, :decide_hands, :straight?, :over_straight?, :all_unique?, :flush?, :number_card?,
-                  :two_pair?, :count_card_number
+  module_function :search_hands, :decide_hands, :straight_flush?, :four_of_a_kind?, :fullhouse?, :flush?, :straight?,
+                  :three_of_a_kind?, :two_pair?, :one_pair?, :royal_straight?, :all_unique?, :number_card?,
+                  :count_card_num
 end
