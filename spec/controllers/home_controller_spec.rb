@@ -16,7 +16,7 @@ RSpec.describe HomeController do
 
     it 'redirect to top page' do
       post :show
-      expect(response).to redirect_to 'http://localhost:3000'
+      expect(response).to redirect_to '/'
     end
   end
 end
