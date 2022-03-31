@@ -20,12 +20,12 @@ module ErrorService
 
   # カードリクエストがStringではない場合
   def card_class_error?(cards)
-    true unless cards.is_a?(String)
+    !cards.is_a?(String)
   end
 
   # カードが5枚ではない場合(全角スペース, 先頭・末尾のスペースはエラー)
   def not_five_cards_error?(cards)
-    true if cards !~ FIVE_CARDS
+    cards !~ FIVE_CARDS
   end
 
   # カード指定文字不正のエラーの場合
@@ -42,8 +42,8 @@ module ErrorService
   end
 
   # カードが重複している場合
-  def repeat_error(cards_array)
-    'カードが重複しています。' if cards_array.uniq.count != 5
+  def repeat_error(card_array)
+    'カードが重複しています。' if card_array.uniq.count != 5
   end
 
   module_function :process_errors, :card_blank_error?, :card_class_error?, :not_five_cards_error?,
