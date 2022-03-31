@@ -32,7 +32,7 @@ module JudgeErrorBase
         "result": result,
         "error": @error
       }
-      response.delete_if { |_key, value| value.blank? == true } # resultまたはerrorのvalueが空であればkeyを削除
+      delete_hash_element(response)
     end
 
     def api_error(cards, api_error_msg, error)
@@ -57,6 +57,11 @@ module JudgeErrorBase
     # 半角スペースを一つにまとめる
     def summarize_space_to_one(cards)
       cards.split(' ').join(' ')
+    end
+
+    # resultまたはerrorのvalueが空であればkeyを削除
+    def delete_hash_element(response)
+      response.delete_if { |_key, value| value.blank? == true }
     end
   end
 end
