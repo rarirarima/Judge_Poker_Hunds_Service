@@ -74,6 +74,7 @@ module JudgeService
     true if @nums.uniq.count == 5
   end
 
+  # 引数の数がcount_card_numの配列内に存在するか確認
   def number_card?(number)
     count_card_num.each do |count|
       return true if count == number
@@ -81,6 +82,8 @@ module JudgeService
     false
   end
 
+  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]を用意
+  # カードの数字が1の場合, 配列の1番目(index==0)の要素を+1
   def count_card_num
     num_list = Array.new(13, 0)
     @nums.each do |num|
