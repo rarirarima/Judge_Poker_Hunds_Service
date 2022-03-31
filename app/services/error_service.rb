@@ -13,7 +13,7 @@ module ErrorService
     end
   end
 
-  # カードが未入力or空文字列
+  # カードが未入力or空文字列の場合
   def card_blank_error?(cards)
     cards.blank?
   end
@@ -23,12 +23,12 @@ module ErrorService
     true unless cards.is_a?(String)
   end
 
-  # カードが5枚ではない場合(全角スペース, 先頭と末尾のスペースはエラー)
+  # カードが5枚ではない場合(全角スペース, 先頭・末尾のスペースはエラー)
   def not_five_cards_error?(cards)
     true if cards !~ FIVE_CARDS
   end
 
-  # カード指定文字不正のエラーメッセージを配列で返す
+  # カード指定文字不正のエラーの場合
   def incorrect_card_error(card_array)
     incorrect_error_msgs = []
     card_array.each.with_index do |card, i|
@@ -41,6 +41,7 @@ module ErrorService
     true if card !~ CORRECT_CARD
   end
 
+  # カードが重複している場合
   def repeat_error(cards_array)
     'カードが重複しています。' if cards_array.uniq.count != 5
   end
