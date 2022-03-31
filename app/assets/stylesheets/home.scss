@@ -9,19 +9,24 @@
 }
 
 .top-main {
-  padding: 100px 0 0;
+  padding: 90px 0 0;
   text-align: center;
-  width: 1300px;
+  width: 1400px;
   height: 600px;
 }
 
 .enter-form {
-  margin-top: 60px;
+  margin-top: 50px;
 }
 
 .result {
+  padding-top: 40px;
   font-size: 40px;
   width: auto;
+  height: 300px;
+  display: flex;
+  align-items: center;
+	justify-content: center;
 }
 
 .title {
