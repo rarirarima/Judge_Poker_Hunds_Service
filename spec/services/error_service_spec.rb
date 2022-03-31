@@ -8,22 +8,22 @@ RSpec.describe ErrorService do
 
     context 'no card' do
       let(:cards) { '' }
-      it { is_expected.to eq 'カードが入力されていません。' }
+      it { is_expected.to eq ['カードが入力されていません。'] }
     end
 
     context 'nil card' do
       let(:cards) { nil }
-      it { is_expected.to eq 'カードが入力されていません。' }
+      it { is_expected.to eq ['カードが入力されていません。'] }
     end
 
     context 'less than 5 cards' do
       let(:cards) { 'H2 S2 C3 D4' }
-      it { is_expected.to eq '5つのカード指定文字を半角スペース区切りで入力してください。' }
+      it { is_expected.to eq ['5つのカード指定文字を半角スペース区切りで入力してください。'] }
     end
 
     context 'more than 5 cards' do
       let(:cards) { 'D2 S5 H1 C3 S9 S13' }
-      it { is_expected.to eq '5つのカード指定文字を半角スペース区切りで入力してください。' }
+      it { is_expected.to eq ['5つのカード指定文字を半角スペース区切りで入力してください。'] }
     end
 
     context 'the suit of 1st card is lowercase' do
@@ -70,12 +70,12 @@ RSpec.describe ErrorService do
 
     context '2 duplicate cards' do
       let(:cards) { 'D3 C8 S10 C8 D3' }
-      it { is_expected.to eq 'カードが重複しています。' }
+      it { is_expected.to eq ['カードが重複しています。'] }
     end
 
     context '5 duplicate cards' do
       let(:cards) { 'S7 S7 S7 S7 S7' }
-      it { is_expected.to eq 'カードが重複しています。' }
+      it { is_expected.to eq ['カードが重複しています。'] }
     end
   end
 end

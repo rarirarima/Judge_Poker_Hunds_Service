@@ -4,9 +4,9 @@ module ErrorService
 
   def search_error(cards)
     if card_blank_error?(cards)
-      'カードが入力されていません。'
+      ['カードが入力されていません。']
     elsif card_class_error?(cards) || not_five_cards_error?(cards)
-      '5つのカード指定文字を半角スペース区切りで入力してください。'
+      ['5つのカード指定文字を半角スペース区切りで入力してください。']
     else
       card_array = cards.split(' ')
       incorrect_card_error(card_array) || repeat_error(card_array)
@@ -43,7 +43,7 @@ module ErrorService
 
   # カードが重複している場合
   def repeat_error(card_array)
-    'カードが重複しています。' if card_array.uniq.count != 5
+    ['カードが重複しています。'] if card_array.uniq.count != 5
   end
 
   module_function :search_error, :card_blank_error?, :card_class_error?, :not_five_cards_error?,

@@ -52,22 +52,13 @@ module PokerApiBase
     end
 
     def api_error(cards, api_error_msg, error)
-      if api_error_msg.is_a?(Array) # Arrayであれば指定文字エラー
-        api_error_msg.each do |error_msg|
-          error_elements = {
-            "card": cards,
-            "msg": error_msg
-          }
-          error.push(error_elements)
-        end
-      else # Stringであればそれ以外のエラー
+      api_error_msg.each do |error_msg|
         error_elements = {
           "card": cards,
-          "msg": api_error_msg
+          "msg": error_msg
         }
         error.push(error_elements)
       end
-      error
     end
 
     # 半角スペースを一つにまとめる
