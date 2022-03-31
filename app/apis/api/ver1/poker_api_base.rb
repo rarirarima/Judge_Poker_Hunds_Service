@@ -12,6 +12,7 @@ module PokerApiBase
     end
 
     #     responseの型
+    #
     #     {
     #       "result": [
     #         {
@@ -29,7 +30,7 @@ module PokerApiBase
     #     }
     def process_api
       @cards_list.each do |cards|
-        cards = summarize_space_to_one(cards) # カード間のスペースを一つにまとめる
+        cards = summarize_space_to_one(cards) # カード間のスペースを整形
         if ErrorService.search_error(cards)
           api_error_msg = ErrorService.search_error(cards)
           api_error(cards, api_error_msg, @error)
