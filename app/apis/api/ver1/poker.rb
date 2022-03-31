@@ -32,7 +32,7 @@ module API
           status 200
           poker_api_base = PokerApiBase::Base.new(cards)
           status 400 if poker_api_base.process_api.include?(:error) && !poker_api_base.process_api.include?(:result)
-          poker_api_base.process_api #役判定・エラー判定の結果を返却
+          poker_api_base.process_api # 役判定・エラー判定の結果を返却
         end
       end
     end
