@@ -17,17 +17,17 @@ module API
         requires :cards, type: Array
       end
 
-      card_info_error = 'カード情報が不正です。'
+      card_info_error_msg = 'カード情報が不正です。'
 
       # JSON形式以外でリクエストされた場合
       rescue_from Grape::Exceptions::Base do |_e|
-        error!({ error: [{ msg: card_info_error }] }, 400)
+        error!({ error: [{ msg: card_info_error_msg }] }, 400)
       end
 
       post '/ver1/poker' do
         cards = params[:cards]
         if cards.empty?
-          error!({ error: [{ msg: card_info_error }] }, 400)
+          error!({ error: [{ msg: card_info_error_msg }] }, 400)
         else
           status 200
           poker_api_base = PokerApiBase::Base.new(cards)
