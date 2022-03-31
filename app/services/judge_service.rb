@@ -7,10 +7,6 @@ module JudgeService
     decide_hands
   end
 
-  def valid?
-    true if ErrorService.process_errors(cards)
-  end
-
   def decide_hands
     if straight_flush?
       { name: 'ストレートフラッシュ', strength: 8 } # {役, 強さを表す数値}
