@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe JudgeErrorBase do
-  include JudgeErrorBase
+RSpec.describe PokerApiBase do
+  include PokerApiBase
   describe 'Array request' do
-    let(:judge_error_base) { JudgeErrorBase::Base.new(cards_list) }
-    let(:api_response) { judge_error_base.process_api }
+    let(:poker_api_base) { PokerApiBase::Base.new(cards_list) }
+    let(:api_response) { poker_api_base.process_api }
 
     context 'one card in array' do
       let(:cards_list) { ['H1 H10 H11 H12 H13'] }

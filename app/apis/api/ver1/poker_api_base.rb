@@ -1,4 +1,4 @@
-module JudgeErrorBase
+module PokerApiBase
   class Base
     include ErrorService
     include JudgeService

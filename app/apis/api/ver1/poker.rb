@@ -1,9 +1,9 @@
-require_relative 'judge_error_base'
+require_relative 'poker_api_base'
 
 module API
   module Ver1
     class Poker < Grape::API
-      include JudgeErrorBase
+      include PokerApiBase
 
       format :json
       content_type :json, 'application/json'
@@ -30,9 +30,9 @@ module API
           error!({ error: [{ msg: card_info_error }] }, 400)
         else
           status 200
-          judge_error_base = JudgeErrorBase::Base.new(cards)
-          status 400 if judge_error_base.process_api.include?(:error) && !judge_error_base.process_api.include?(:result)
-          judge_error_base.process_api
+          poker_api_base = PokerApiBase::Base.new(cards)
+          status 400 if poker_api_base.process_api.include?(:error) && !poker_api_base.process_api.include?(:result)
+          poker_api_base.process_api #役判定・エラー判定の結果を返却
         end
       end
     end
