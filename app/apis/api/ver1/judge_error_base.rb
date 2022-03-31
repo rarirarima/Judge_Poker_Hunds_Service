@@ -6,30 +6,46 @@ module JudgeErrorBase
 
     def initialize(cards_list)
       @cards_list = cards_list
+      @result = []
+      @error = []
+      @strengths = []
     end
 
+    #     responseの型
+    #     {
+    #       "result": [
+    #         {
+    #           "card": "カード",
+    #           "hand": "役名",
+    #           "best": "true/false"
+    #         }
+    #       ],
+    #       "error": [
+    #         {
+    #           "card": "カード",
+    #           "msg": "エラー内容"
+    #         }
+    #       ]
+    #     }
     def process_api
-      result = []
-      @error = []
-      strengths = []
       @cards_list.each do |cards|
         cards = summarize_space_to_one(cards) # カード間のスペースを一つにまとめる
-        if ErrorService.process_errors(cards)
-          api_error_msg = ErrorService.process_errors(cards)
+        if ErrorService.search_error(cards)
+          api_error_msg = ErrorService.search_error(cards)
           api_error(cards, api_error_msg, @error)
         else
           result_elements = {
             "card": cards,
-            "hand": JudgeService.search_hands(cards)[:name],
+            "hand": JudgeService.search_hand(cards)[:name],
             "best": false
           }
-          result.push(result_elements)
-          strengths.push(JudgeService.search_hands(cards)[:strength])
+          @result.push(result_elements)
+          @strengths.push(JudgeService.search_hand(cards)[:strength])
         end
       end
-      result = StrengthService.decide_best(strengths, result)
+      @result = StrengthService.search_best(@strengths, @result)
       response = {
-        "result": result,
+        "result": @result,
         "error": @error
       }
       delete_hash_element(response)

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe StrengthService do
   include StrengthService
   let(:fixed_result) do
-    StrengthService.decide_best(strengths,
+    StrengthService.search_best(strengths,
                                 result)
   end
   context 'has 2 results & 1 of them is best' do

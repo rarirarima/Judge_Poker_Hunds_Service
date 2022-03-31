@@ -2,7 +2,7 @@ module ErrorService
   FIVE_CARDS = /^(\w+\s+){4}\w+$/
   CORRECT_CARD = /^([CDHS])([1-9]|1[0-3])$/
 
-  def process_errors(cards)
+  def search_error(cards)
     if card_blank_error?(cards)
       'カードが入力されていません。'
     elsif card_class_error?(cards) || not_five_cards_error?(cards)
@@ -46,6 +46,6 @@ module ErrorService
     'カードが重複しています。' if card_array.uniq.count != 5
   end
 
-  module_function :process_errors, :card_blank_error?, :card_class_error?, :not_five_cards_error?,
+  module_function :search_error, :card_blank_error?, :card_class_error?, :not_five_cards_error?,
                   :incorrect_card_error, :incorrect_card?, :repeat_error
 end

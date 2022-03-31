@@ -5,7 +5,7 @@ RSpec.describe JudgeService do
 
   describe 'String request' do
     describe 'Judge hunds' do
-      subject { JudgeService.search_hands(cards)[:name] }
+      subject { JudgeService.search_hand(cards)[:name] }
 
       context 'all the same suit & 5 straight number' do
         let(:cards) { 'H1 H2 H3 H4 H5' }

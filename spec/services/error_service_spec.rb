@@ -4,7 +4,7 @@ RSpec.describe ErrorService do
   include ErrorService
 
   describe 'error' do
-    subject { ErrorService.process_errors(cards) }
+    subject { ErrorService.search_error(cards) }
 
     context 'no card' do
       let(:cards) { '' }
