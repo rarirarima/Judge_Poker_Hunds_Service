@@ -1,0 +1,43 @@
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-recursive
+Making all in include
+Making all in libxml
+make[3]: Nothing to be done for `all'.
+make[3]: Nothing to be done for `all-am'.
+Making all in .
+  CC       xmllint.o
+  CC       SAX.lo
+  CC       entities.lo
+entities.c:561:68: warning: unused parameter 'attr' [-Wunused-parameter]
+xmlEncodeEntitiesInternal(xmlDocPtr doc, const xmlChar *input, int attr) {
+                                                                   ^
+1 warning generated.
+  CC       encoding.lo
+encoding.c:500:26: warning: cast from 'const unsigned char *' to 'unsigned short *' increases required alignment from 1 to 2 [-Wcast-align]
+    unsigned short* in = (unsigned short*) inb;
+                         ^~~~~~~~~~~~~~~~~~~~~
+encoding.c:582:27: warning: cast from 'unsigned char *' to 'unsigned short *' increases required alignment from 1 to 2 [-Wcast-align]
+    unsigned short* out = (unsigned short*) outb;
+                          ^~~~~~~~~~~~~~~~~~~~~~
+encoding.c:738:26: warning: cast from 'const unsigned char *' to 'unsigned short *' increases required alignment from 1 to 2 [-Wcast-align]
+    unsigned short* in = (unsigned short*) inb;
+                         ^~~~~~~~~~~~~~~~~~~~~
+encoding.c:824:27: warning: cast from 'unsigned char *' to 'unsigned short *' increases required alignment from 1 to 2 [-Wcast-align]
+    unsigned short* out = (unsigned short*) outb;
+                          ^~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+  CC       error.lo
+  CC       parserInternals.lo
+  CC       parser.lo
+  CC       tree.lo
+  CC       hash.lo
+  CC       list.lo
+  CC       xmlIO.lo
+  CC       xmlmemory.lo
+  CC       uri.lo
+  CC       valid.lo
+  CC       xlink.lo
+  CC       HTMLparser.lo
+  CC       HTMLtree.lo
+make[2]: *** [HTMLtree.lo] Error 1
+make[1]: *** [all-recursive] Interrupt: 2
+make: *** [all] Interrupt: 2

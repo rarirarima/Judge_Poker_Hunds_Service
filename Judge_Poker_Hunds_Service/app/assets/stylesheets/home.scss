@@ -1,0 +1,56 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.top {
+  height: 820px;
+  background-image: url("../images/poker.jpeg") !important;
+  background-size: contain;
+}
+
+.top-main {
+  padding: 90px 0 0;
+  text-align: center;
+  width: 1400px;
+  height: 600px;
+}
+
+.enter-form {
+  margin-top: 50px;
+}
+
+.result {
+  padding-top: 40px;
+  font-size: 40px;
+  width: auto;
+  height: 300px;
+  display: flex;
+  align-items: center;
+	justify-content: center;
+}
+
+.title {
+  font-size: 70px;
+  margin: 0;
+}
+
+.submit-button {
+  height: 50px;
+  width: 70px;
+}
+
+.enter-area {
+  height: 50px;
+  width: 300px;
+}
+
+::placeholder {
+  height: 50px;
+  text-align: center;
+  font-size: 25px;
+}
+
+input {
+  font-size: 25px;
+  text-align: center;
+}

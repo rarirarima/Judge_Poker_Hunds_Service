@@ -1,0 +1,15 @@
+<div class=top>
+  <div class='top-main'>
+    <h1 class=title>Poker 役判定</h1>
+    <h2>半角英字大文字のスート（C,D,H,S）と半角数字（1〜13）を組み合わせて</br>半角スペース区切りで5枚のカードを入力してください。</h2>
+      <%= form_tag('/home/show') do %>
+        <div class='enter-form'>
+          <input name='cards' value="<%=flash[:cards]%>" placeholder="例) C1 D2 H1 S10 C13" class='enter-area'>
+          <input type='submit' value='判定' class='submit-button'>
+        </div>
+      <% end %>
+    <div class='result'>
+      <%= simple_format(flash[:message]) %>
+    </div>
+  </div>
+</div>

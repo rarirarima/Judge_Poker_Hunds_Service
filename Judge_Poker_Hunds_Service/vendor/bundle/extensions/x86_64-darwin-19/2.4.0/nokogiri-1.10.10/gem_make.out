@@ -1,0 +1,3 @@
+current directory: /Users/r.arima/RubymineProjects/Judge_Poker_Hunds_Service/Judge_Poker_Hunds_Service/vendor/bundle/gems/nokogiri-1.10.10/ext/nokogiri
+/Users/r.arima/.rbenv/versions/2.4.7/bin/ruby -r ./siteconf20220408-34944-1fcqnt1.rb extconf.rb
+undefined method `success?' for nil:NilClass
